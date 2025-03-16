@@ -5,6 +5,9 @@
 
 **Randomizer-LuckyOne** 是一个简单但强大的随机抽取应用，适用于活动、课堂、会议等场景。你可以从指定范围内随机选择幸运儿，同时支持 **排除特定号码**，让抽取过程更加灵活！🚀
 
+> [!NOTE]
+> 在 [此處](https://lucky.caner.hk/zhhk) 嘗試在線示範
+
 <img src="./img-desktop.jpg" alt="Desktop Screenshot" width="600">
 <img src="./img-phone.jpg" alt="Phone Screenshot" width="600">
 
