@@ -2,6 +2,9 @@
 
 **Randomizer-LuckyOne** is a simple and powerful web application designed to randomly select participants for activities, events, or any scenario that requires a random draw. Whether you're hosting a class, event, or team activity, this tool helps you randomly choose the lucky ones from a predefined list, with the added option of excluding certain participants. 🚀
 
+<img src="./img-desktop.jpg" alt="Desktop Screenshot" width="600">
+<img src="./img-phone.jpg" alt="Phone Screenshot" width="130">
+
 ## Features ✨
 
 - **Random Participant Selection**: Quickly select a random number of participants from a set of numbers (e.g., 1 to 42). 🎲
@@ -18,9 +21,6 @@
 3. **Select Number of Winners**: Choose how many participants you'd like to randomly select. 🎉
 4. **Start the Draw**: Click "Start" to initiate the random selection process. The app will show a fun animation as it randomly selects the winners. 🌀
 5. **Download Results**: After the draw, you can download the results in an HTML file for easy sharing and record-keeping. 📂
-
-![App Screenshot](./path/to/your/image.png)  
-*Screenshot placeholder: Please add an image showcasing the app interface here.*
 
 ## Installation 🛠️
 
