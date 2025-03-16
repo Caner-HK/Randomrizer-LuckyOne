@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('https://resource.caner.hk/get/josefin_sans/JosefinSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('https://resource.caner.hk/get/josefin_sans/JosefinSans-Italic-VariableFont_wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('https://resource.caner.hk/get/josefin_sans/static/JosefinSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Josefin Sans';
+    src: url('https://resource.caner.hk/get/josefin_sans/static/JosefinSans-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
