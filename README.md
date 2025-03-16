@@ -1,4 +1,4 @@
-# Randomizer-LuckyOne 🎉
+# 🎲 Randomizer-LuckyOne 🎉
 
 | English | [简体中文](./README-ZH.md) | [繁體中文](./README-ZH-HK.md) |
 
