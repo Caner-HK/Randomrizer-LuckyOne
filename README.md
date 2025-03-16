@@ -1,5 +1,7 @@
 # Randomizer-LuckyOne 🎉
 
+| English | [简体中文](./README-ZH.md) | [繁體中文](./README-ZH-HK.md) |
+
 **Randomizer-LuckyOne** is a simple and powerful web application designed to randomly select participants for activities, events, or any scenario that requires a random draw. Whether you're hosting a class, event, or team activity, this tool helps you randomly choose the lucky ones from a predefined list, with the added option of excluding certain participants. 🚀
 
 <img src="./img-desktop.jpg" alt="Desktop Screenshot" width="600">
