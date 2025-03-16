@@ -1,5 +1,7 @@
-
 # 🎲 Randomizer-LuckyOne 🎉
+
+| [English](./README.md) | 简体中文 | [繁體中文](./README-ZH-HK.md) |
+
 
 **Randomizer-LuckyOne** 是一个简单但强大的随机抽取应用，适用于活动、课堂、会议等场景。你可以从指定范围内随机选择幸运儿，同时支持 **排除特定号码**，让抽取过程更加灵活！🚀
 
