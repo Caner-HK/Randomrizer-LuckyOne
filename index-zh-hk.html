@@ -1,0 +1,456 @@
+<!doctype html>
+<!--
+ ____                                        __  __  __  __     
+/\  _`\                                     /\ \/\ \/\ \/\ \    
+\ \ \/\_\     __      ___      __   _ __    \ \ \_\ \ \ \/'/'   
+ \ \ \/_/_  /'__`\  /' _ `\  /'__`\/\`'__\   \ \  _  \ \ , <    
+  \ \ \L\ \/\ \L\.\_/\ \/\ \/\  __/\ \ \/     \ \ \ \ \ \ \\`\  
+   \ \____/\ \__/.\_\ \_\ \_\ \____\\ \_\      \ \_\ \_\ \_\ \_\
+    \/___/  \/__/\/_/\/_/\/_/\/____/ \/_/       \/_/\/_/\/_/\/_/
+
+    COPYRIGHT © Caner HK 2025
+    https://github.com/Caner-HK/Randomrizer-LuckyOne
+-->
+<html lang="zh-HK">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <link rel="stylesheet" href="https://resource.caner.hk/get/mdui/css/mdui.min.css" />
+  <link href="https://resource.caner.hk/get/josefin_sans/get.css" rel="stylesheet">
+  <title>隨機選擇活動參與者</title>
+  <style>
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+    }
+    .rounded {
+      border-radius: 6px;
+    }
+    .custom-container {
+      padding-left: 15px;
+      padding-right: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 93vh;
+    }
+    .mdui-card {
+      width: 100%;
+      max-width: 700px;
+    }
+    .action-container {
+      display: flex;
+      align-items: center;
+    }
+    .full-container {
+      margin: 0px;
+    }
+    
+    #excludeCheckboxes {
+      padding-left: 24px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+
+<body class="mdui-theme-primary-blue mdui-theme-accent-amber mdui-theme-layout-auto">
+  <div class="custom-container">
+    <div class="mdui-card rounded">
+
+      <!-- Loading Progress -->
+      <div id="loadingProgress" class="mdui-progress" style="display: none;">
+        <div class="mdui-progress-indeterminate"></div>
+      </div>
+
+      <!-- Normal Progress -->
+      <div id="normalProgress" class="mdui-progress">
+        <div class="mdui-progress-determinate" style="width: 100%;"></div>
+      </div>
+
+      <!-- 卡片標題 -->
+      <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title mdui-text-color-theme-700">
+          隨機選擇 <span id="number">5 人</span> 作為幸運兒
+        </div>
+        <div class="mdui-card-primary-subtitle">
+          隨機選擇幸運兒參加活動 😁
+        </div>
+      </div>
+
+      <!-- 卡片內容 -->
+      <div class="mdui-card-content" style="margin-top: -16px;">
+
+        <!-- 設定總人數（預設顯示“點擊以設定總人數”）-->
+        <div class="mdui-chip" style="margin-bottom: 8px;" mdui-dialog="{target: '#setCount'}">
+          <span class="mdui-chip-icon mdui-color-blue">
+            <i class="mdui-icon material-icons">people</i>
+          </span>
+          <span class="mdui-chip-title" id="chipTotalPeople">點擊以設定總人數</span>
+        </div>
+        <br>
+
+        <!-- 設定排除項（預設顯示“點擊以設定排除項”）-->
+        <div class="mdui-chip" style="margin-bottom: 8px;" mdui-dialog="{target: '#setExclude'}">
+          <span class="mdui-chip-icon mdui-color-blue">
+            <i class="mdui-icon material-icons">people_outlined</i>
+          </span>
+          <span class="mdui-chip-title" id="chipExcluded">點擊以設定排除項</span>
+        </div>
+        <br>
+
+        <!-- 設定抽取人數：菜單項根據剩餘人數判斷可用性 -->
+        <div class="mdui-chip" mdui-menu="{target: '#example-menu'}">
+          <span class="mdui-chip-icon mdui-color-amber">
+            <i class="mdui-icon material-icons">games</i>
+          </span>
+          <span class="mdui-chip-title" id="chipContent">選擇抽取的人數：5 人</span>
+        </div>
+
+        <ul class="mdui-menu rounded" id="example-menu">
+          <li class="mdui-menu-item" id="menuItem1" onclick="updateChip(1)">
+            <a href="javascript:;" class="mdui-ripple">1 人</a>
+          </li>
+          <li class="mdui-menu-item" id="menuItem5" onclick="updateChip(5)">
+            <a href="javascript:;" class="mdui-ripple">5 人</a>
+          </li>
+          <li class="mdui-menu-item" id="menuItem10" onclick="updateChip(10)">
+            <a href="javascript:;" class="mdui-ripple">10 人</a>
+          </li>
+        </ul>
+
+        <!-- 顯示抽取結果 -->
+        <div class="mdui-typo-headline" style="margin-top: 16px;">本次幸運兒是：</div>
+        <br>
+        <strong class="mdui-typo-display-2">
+          <span id="luckyone" style="line-height: 1;">? ? ? ? ?</span>
+        </strong>
+      </div>
+
+      <!-- 卡片按鈕區 -->
+      <div class="mdui-card-actions action-container">
+        <button id="startButton" class="mdui-btn rounded mdui-btn-raised mdui-ripple mdui-color-theme-accent action-item"
+          onclick="getRandomPeople()" disabled>
+          <span style="position: relative; top: 1px;">開始</span>
+          <i class="mdui-icon material-icons">arrow_forward</i>
+        </button>
+
+        <div id="spinnerContainer" class="action-item" style="display:none; margin-left: 24px; margin-right:24px;">
+          <div class="mdui-spinner mdui-spinner-colorful"></div>
+        </div>
+
+        <button id="saveButton" class="mdui-btn rounded mdui-btn-raised mdui-ripple mdui-color-theme-accent action-item"
+          onclick="saveResult()" style="display:none;">
+          <span style="position: relative; top: 1px;">下載結果</span>
+          <i class="mdui-icon material-icons">file_download</i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 對話框：設定總人數 -->
+  <div class="mdui-dialog" id="setCount">
+    <div class="mdui-dialog-title">設定抽取總人數</div>
+    <div class="mdui-dialog-content">
+      請輸入人數，抽取的數字將為 1 至您設定的數字
+      <div class="mdui-textfield mdui-textfield-floating-label">
+        <label class="mdui-textfield-label">輸入數字</label>
+        <input class="mdui-textfield-input" id="inputCount" type="number" min="1" />
+      </div>
+    </div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+      <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="setTotalCount()">確定</button>
+    </div>
+  </div>
+
+  <!-- 對話框：設定排除項 -->
+  <div class="mdui-dialog" id="setExclude">
+    <div class="mdui-dialog-title">設定排除列表</div>
+    <div class="full-container">
+      <div class="mdui-dialog-content" style="margin-top: -25px; margin-bottom: -16px;">
+        所勾選的數字將被排除在抽取列表外，剩餘人數少於抽取人數時將無法抽取
+      </div>
+      <div id="excludeCheckboxes">
+        <!-- 動態添加復選框 -->
+      </div>
+    </div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消</button>
+      <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="setExcludeList()">確定</button>
+    </div>
+  </div>
+
+  <script src="https://resource.caner.hk/get/mdui/js/mdui.min.js"></script>
+  <script>
+    let totalPeopleCount = 0;    // 總人數
+    let excludedNumbers = [];    // 排除列表（由用戶通過對話框選擇）
+    let selectedNumber = 5;      // 當前選定的“抽幾個人”，預設 5 人
+
+    document.addEventListener('DOMContentLoaded', function () {
+      mdui.mutation();
+    });
+
+    /**
+     * 剩餘人數 = totalPeopleCount - excludedNumbers.length
+     */
+    function getLeftoverCount() {
+      return totalPeopleCount - excludedNumbers.length;
+    }
+
+    /**
+     * 設定總人數
+     */
+    function setTotalCount() {
+      const inputVal = document.getElementById('inputCount').value;
+      if (!inputVal || inputVal <= 0) {
+        return;
+      }
+      totalPeopleCount = parseInt(inputVal, 10);
+
+      // 更新顯示
+      document.getElementById('chipTotalPeople').textContent = `數字範圍：1 - ${totalPeopleCount}`;
+
+      // 生成“排除列表”對話框的復選框
+      generateExcludeCheckboxes();
+
+      // 重置排除項
+      excludedNumbers = [];
+      document.getElementById('chipExcluded').textContent = '點擊以設置排除項';
+
+      // 菜單項可用性：根據“剩餘人數”來判斷
+      toggleMenuItems(getLeftoverCount());
+
+      // 檢查是否可以抽取
+      checkIfStartButtonEnabled();
+
+      // 關閉對話框
+      const dialog = document.getElementById('setCount');
+      new mdui.Dialog(dialog).close();
+    }
+
+    /**
+     * 動態生成復選框（1 ~ totalPeopleCount）
+     */
+    function generateExcludeCheckboxes() {
+      const container = document.getElementById('excludeCheckboxes');
+      container.innerHTML = ''; // 先清空
+
+      for (let i = 1; i <= totalPeopleCount; i++) {
+        // 創建 label
+        const label = document.createElement('label');
+        label.className = 'mdui-checkbox';
+        // 創建 input
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.value = i;   // 用數字標識自己
+        // 創建 i
+        const iTag = document.createElement('i');
+        iTag.className = 'mdui-checkbox-icon';
+
+        // label 的文本節點
+        const textNode = document.createTextNode(` 數字 ${i}`);
+
+        // 拼裝
+        label.appendChild(input);
+        label.appendChild(iTag);
+        label.appendChild(textNode);
+
+        // 加入容器
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+      }
+    }
+
+    /**
+     * 用戶點擊“確定”時，讀取勾選的數字並更新 excludedNumbers
+     */
+    function setExcludeList() {
+      const container = document.getElementById('excludeCheckboxes');
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+      const newExcludes = [];
+    
+      checkboxes.forEach(chk => {
+        if (chk.checked) {
+          newExcludes.push(parseInt(chk.value, 10));
+        }
+      });
+    
+      excludedNumbers = newExcludes;
+      
+      // 更新 Chip 顯示
+      if (excludedNumbers.length > 0) {
+        // 排除項格式：已排除 1,3,6 共 3 項
+        document.getElementById('chipExcluded').textContent = `已排除 ${excludedNumbers.join(', ')} 共 ${excludedNumbers.length} 項`;
+      } else {
+        document.getElementById('chipExcluded').textContent = '點擊以設置排除項';
+      }
+    
+      // 更新菜單項可用性、檢查可否抽取
+      toggleMenuItems(getLeftoverCount());
+      checkIfStartButtonEnabled();
+    }
+
+    /**
+     * 根據剩餘人數來禁用或啟用抽取人數 > 剩餘人數 的菜單項
+     * @param {*} effectiveCount 剩餘人數(總人數-排除人數)
+     */
+    function toggleMenuItems(effectiveCount) {
+      const menuItem1 = document.getElementById('menuItem1');
+      const menuItem5 = document.getElementById('menuItem5');
+      const menuItem10 = document.getElementById('menuItem10');
+
+      // 先全部移除禁用
+      [menuItem1, menuItem5, menuItem10].forEach(item => item.classList.remove('mdui-disabled'));
+
+      // 如果 effectiveCount < 1，都禁用
+      if (effectiveCount < 1) {
+        [menuItem1, menuItem5, menuItem10].forEach(item => item.classList.add('mdui-disabled'));
+        return;
+      }
+
+      // 如果 < 5，人，則禁用5和10
+      if (effectiveCount < 5) {
+        menuItem5.classList.add('mdui-disabled');
+        menuItem10.classList.add('mdui-disabled');
+      } 
+      // 如果 < 10 人，則禁用10
+      else if (effectiveCount < 10) {
+        menuItem10.classList.add('mdui-disabled');
+      }
+    }
+
+    /**
+     * 更新“抽幾個人”設置
+     */
+    function updateChip(number) {
+      const menuItem = document.getElementById(`menuItem${number}`);
+      if (menuItem.classList.contains('mdui-disabled')) {
+        // 如果被禁用，給出提示
+        mdui.snackbar({
+          message: `剩餘人數不足以抽 ${number} 人`,
+          position: 'left-bottom'
+        });
+        return;
+      }
+
+      selectedNumber = number;
+      document.getElementById('chipContent').textContent = `選擇抽取的人數：${number} 人`;
+      document.getElementById('number').textContent = `${number} 人`;
+
+      // 檢查是否可以開始
+      checkIfStartButtonEnabled();
+    }
+
+    /**
+     * 檢查“開始”按鈕是否可用：剩餘人數 >= selectedNumber
+     */
+    function checkIfStartButtonEnabled() {
+      // 如果還沒設定 totalPeopleCount，或者 totalPeopleCount=0，直接禁用
+      if (totalPeopleCount <= 0) {
+        document.getElementById('startButton').disabled = true;
+        return;
+      }
+
+      const leftover = getLeftoverCount();
+      // 如果剩餘人數 >= 選定抽取人數 => 啟用，否則禁用
+      if (leftover >= selectedNumber) {
+        document.getElementById('startButton').disabled = false;
+      } else {
+        document.getElementById('startButton').disabled = true;
+      }
+    }
+
+    /**
+     * 開始抽取
+     */
+    function getRandomPeople() {
+      // 隱藏開始按鈕，顯示 spinner
+      document.getElementById('startButton').style.display = 'none';
+      document.getElementById('spinnerContainer').style.display = 'block';
+
+      // 隱藏 normalProgress，顯示 loadingProgress
+      document.getElementById('normalProgress').style.display = 'none';
+      document.getElementById('loadingProgress').style.display = 'block';
+
+      // 動態更新數字：每100毫秒隨機更新
+      const intervalId = setInterval(() => {
+        const luckyOneElement = document.getElementById('luckyone');
+        let randomNumbers = [];
+        for (let i = 0; i < selectedNumber; i++) {
+          randomNumbers.push(Math.floor(Math.random() * totalPeopleCount) + 1);
+        }
+        luckyOneElement.textContent = randomNumbers.join(', ');
+      }, 100);
+
+      // 3秒後停止閃爍，並顯示最終結果
+      setTimeout(() => {
+        clearInterval(intervalId);
+
+        // 可抽取的數組：剔除排除項
+        let peopleArray = Array.from({ length: totalPeopleCount }, (_, i) => i + 1)
+          .filter(num => !excludedNumbers.includes(num));
+
+        let leftover = peopleArray.length; // 真正剩餘可抽的人數
+        let luckyOnes = [];
+
+        for (let i = 0; i < selectedNumber; i++) {
+          if (peopleArray.length === 0) break; // 沒人可抽則跳出
+          const randomIndex = Math.floor(Math.random() * peopleArray.length);
+          luckyOnes.push(peopleArray.splice(randomIndex, 1)[0]);
+        }
+
+        // 顯示最終結果
+        document.getElementById('luckyone').textContent = luckyOnes.join(', ');
+
+        // UI 還原
+        document.getElementById('spinnerContainer').style.display = 'none';
+        document.getElementById('loadingProgress').style.display = 'none';
+        document.getElementById('normalProgress').style.display = 'block';
+
+        const startButton = document.getElementById('startButton');
+        startButton.style.display = 'block';
+        // 改成“再次抽取”狀態
+        startButton.innerHTML = '<span style="position: relative; top: 2px;">再次抽取</span> <i class="mdui-icon material-icons">refresh</i>';
+        document.getElementById('saveButton').style.display = 'block'; // 顯示保存按鈕
+      }, 3000);
+    }
+
+    /**
+     * 下載抽取結果到 HTML 檔案
+     */
+    function saveResult() {
+      const luckyNumbers = document.getElementById('luckyone').textContent;
+      const currentDate = new Date();
+      const dateString = currentDate.toLocaleDateString('zh-HK'); // 日期
+      const timeString = currentDate.toLocaleTimeString('zh-HK', { hour12: false }); // 時間
+
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="zh-HK">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+          <title>本次幸運兒</title>
+        </head>
+        <body>
+          <h1>幸運兒序號:<strong> ${luckyNumbers}</strong></h1>
+          <p>抽取日期: ${dateString}</p>
+          <p>抽取時間: ${timeString}</p>
+          <h1>太幸運了！你被抽中了 😁😁😁</h1>
+        </body>
+        </html>`;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '抽取結果.html';
+      a.click();
+    }
+  </script>
+</body>
+</html>

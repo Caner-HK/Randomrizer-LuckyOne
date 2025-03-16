@@ -1,0 +1,456 @@
+<!doctype html>
+<!--
+ ____                                        __  __  __  __     
+/\  _`\                                     /\ \/\ \/\ \/\ \    
+\ \ \/\_\     __      ___      __   _ __    \ \ \_\ \ \ \/'/'   
+ \ \ \/_/_  /'__`\  /' _ `\  /'__`\/\`'__\   \ \  _  \ \ , <    
+  \ \ \L\ \/\ \L\.\_/\ \/\ \/\  __/\ \ \/     \ \ \ \ \ \ \\`\  
+   \ \____/\ \__/.\_\ \_\ \_\ \____\\ \_\      \ \_\ \_\ \_\ \_\
+    \/___/  \/__/\/_/\/_/\/_/\/____/ \/_/       \/_/\/_/\/_/\/_/
+
+    COPYRIGHT © Caner HK 2025
+    https://github.com/Caner-HK/Randomrizer-LuckyOne
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+  <meta name="renderer" content="webkit" />
+  <meta name="force-rendering" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <link rel="stylesheet" href="https://resource.caner.hk/get/mdui/css/mdui.min.css" />
+  <link href="https://resource.caner.hk/get/josefin_sans/get.css" rel="stylesheet">
+  <title>Random Activity Name Generator</title>
+  <style>
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+    }
+    .rounded {
+      border-radius: 6px;
+    }
+    .custom-container {
+      padding-left: 15px;
+      padding-right: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 93vh;
+    }
+    .mdui-card {
+      width: 100%;
+      max-width: 700px;
+    }
+    .action-container {
+      display: flex;
+      align-items: center;
+    }
+    .full-container {
+      margin: 0px;
+    }
+    
+    #excludeCheckboxes {
+      padding-left: 24px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-top: 10px;
+    }
+  </style>
+</head>
+
+<body class="mdui-theme-primary-blue mdui-theme-accent-amber mdui-theme-layout-auto">
+  <div class="custom-container">
+    <div class="mdui-card rounded">
+
+      <!-- Loading Progress -->
+      <div id="loadingProgress" class="mdui-progress" style="display: none;">
+        <div class="mdui-progress-indeterminate"></div>
+      </div>
+
+      <!-- Normal Progress -->
+      <div id="normalProgress" class="mdui-progress">
+        <div class="mdui-progress-determinate" style="width: 100%;"></div>
+      </div>
+
+      <!-- Card Title -->
+      <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title mdui-text-color-theme-700">
+          <strong>Randomly Select <span id="number">5 People</span> as the Lucky Ones</strong>
+        </div>
+        <div class="mdui-card-primary-subtitle">
+          Randomly selecting lucky ones for the activity 😁
+        </div>
+      </div>
+
+      <!-- Card Content -->
+      <div class="mdui-card-content" style="margin-top: -16px;">
+
+        <!-- Set Total Number of People (Default: Click to Set Total Number) -->
+        <div class="mdui-chip" style="margin-bottom: 8px;" mdui-dialog="{target: '#setCount'}">
+          <span class="mdui-chip-icon mdui-color-blue">
+            <i class="mdui-icon material-icons">people</i>
+          </span>
+          <span class="mdui-chip-title" id="chipTotalPeople">Click to Set Total Number</span>
+        </div>
+        <br>
+
+        <!-- Set Excluded Items (Default: Click to Set Exclusions) -->
+        <div class="mdui-chip" style="margin-bottom: 8px;" mdui-dialog="{target: '#setExclude'}">
+          <span class="mdui-chip-icon mdui-color-blue">
+            <i class="mdui-icon material-icons">people_outlined</i>
+          </span>
+          <span class="mdui-chip-title" id="chipExcluded">Click to Set Exclusions</span>
+        </div>
+        <br>
+
+        <!-- Set Number of People to Select: The menu items adjust based on the remaining number of people -->
+        <div class="mdui-chip" mdui-menu="{target: '#example-menu'}">
+          <span class="mdui-chip-icon mdui-color-amber">
+            <i class="mdui-icon material-icons">games</i>
+          </span>
+          <span class="mdui-chip-title" id="chipContent">Choose Number to Select: 5 People</span>
+        </div>
+
+        <ul class="mdui-menu rounded" id="example-menu">
+          <li class="mdui-menu-item" id="menuItem1" onclick="updateChip(1)">
+            <a href="javascript:;" class="mdui-ripple">1 Person</a>
+          </li>
+          <li class="mdui-menu-item" id="menuItem5" onclick="updateChip(5)">
+            <a href="javascript:;" class="mdui-ripple">5 People</a>
+          </li>
+          <li class="mdui-menu-item" id="menuItem10" onclick="updateChip(10)">
+            <a href="javascript:;" class="mdui-ripple">10 People</a>
+          </li>
+        </ul>
+
+        <!-- Display Selected Results -->
+        <div class="mdui-typo-headline" style="margin-top: 16px;">The Lucky Ones Are:</div>
+        <br>
+        <strong class="mdui-typo-display-2">
+          <span id="luckyone" style="line-height: 1;">? ? ? ? ?</span>
+        </strong>
+      </div>
+
+      <!-- Card Button Section -->
+      <div class="mdui-card-actions action-container">
+        <button id="startButton" class="mdui-btn rounded mdui-btn-raised mdui-ripple mdui-color-theme-accent action-item"
+          onclick="getRandomPeople()" disabled>
+          <span style="position: relative; top: 1px;">Start</span>
+          <i class="mdui-icon material-icons">arrow_forward</i>
+        </button>
+
+        <div id="spinnerContainer" class="action-item" style="display:none; margin-left: 24px; margin-right:24px;">
+          <div class="mdui-spinner mdui-spinner-colorful"></div>
+        </div>
+
+        <button id="saveButton" class="mdui-btn rounded mdui-btn-raised mdui-ripple mdui-color-theme-accent action-item"
+          onclick="saveResult()" style="display:none;">
+          <span style="position: relative; top: 1px;">Download Result</span>
+          <i class="mdui-icon material-icons">file_download</i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dialog: Set Total Number of People -->
+  <div class="mdui-dialog" id="setCount">
+    <div class="mdui-dialog-title">Set Total Number to Select From</div>
+    <div class="mdui-dialog-content">
+      Enter a number. The selection will be from 1 to the number you set.
+      <div class="mdui-textfield mdui-textfield-floating-label">
+        <label class="mdui-textfield-label">Enter Number</label>
+        <input class="mdui-textfield-input" id="inputCount" type="number" min="1" />
+      </div>
+    </div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>Cancel</button>
+      <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="setTotalCount()">Confirm</button>
+    </div>
+  </div>
+
+  <!-- Dialog: Set Exclusions -->
+  <div class="mdui-dialog" id="setExclude">
+    <div class="mdui-dialog-title">Set Exclusions</div>
+    <div class="full-container">
+      <div class="mdui-dialog-content" style="margin-top: -25px; margin-bottom: -16px;">
+        The selected numbers will be excluded from the selection. If the remaining number is less than the selected amount, the selection cannot proceed.
+      </div>
+      <div id="excludeCheckboxes">
+        <!-- Dynamically generated checkboxes -->
+      </div>
+    </div>
+    <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-close>Cancel</button>
+      <button class="mdui-btn mdui-ripple" mdui-dialog-confirm onclick="setExcludeList()">Confirm</button>
+    </div>
+  </div>
+
+  <script src="https://resource.caner.hk/get/mdui/js/mdui.min.js"></script>
+  <script>
+    let totalPeopleCount = 0;    // Total number of people
+    let excludedNumbers = [];    // Exclusion list (chosen by the user through dialog)
+    let selectedNumber = 5;      // Number of people to select, default is 5
+
+    document.addEventListener('DOMContentLoaded', function () {
+      mdui.mutation();
+    });
+
+    /**
+     * Remaining people = totalPeopleCount - excludedNumbers.length
+     */
+    function getLeftoverCount() {
+      return totalPeopleCount - excludedNumbers.length;
+    }
+
+    /**
+     * Set Total Number of People
+     */
+    function setTotalCount() {
+      const inputVal = document.getElementById('inputCount').value;
+      if (!inputVal || inputVal <= 0) {
+        return;
+      }
+      totalPeopleCount = parseInt(inputVal, 10);
+
+      // Update the display
+      document.getElementById('chipTotalPeople').textContent = `Array numbers: 1 - ${totalPeopleCount}`;
+
+      // Generate the "Exclusion List" checkboxes in the dialog
+      generateExcludeCheckboxes();
+
+      // Reset exclusions
+      excludedNumbers = [];
+      document.getElementById('chipExcluded').textContent = 'Click to Set Exclusions';
+
+      // Adjust menu items: based on the remaining number of people
+      toggleMenuItems(getLeftoverCount());
+
+      // Check if selection can be made
+      checkIfStartButtonEnabled();
+
+      // Close the dialog
+      const dialog = document.getElementById('setCount');
+      new mdui.Dialog(dialog).close();
+    }
+
+    /**
+     * Dynamically generate checkboxes (1 ~ totalPeopleCount)
+     */
+    function generateExcludeCheckboxes() {
+      const container = document.getElementById('excludeCheckboxes');
+      container.innerHTML = ''; // Clear previous content
+
+      for (let i = 1; i <= totalPeopleCount; i++) {
+        // Create label
+        const label = document.createElement('label');
+        label.className = 'mdui-checkbox';
+        // Create input
+        const input = document.createElement('input');
+        input.type = 'checkbox';
+        input.value = i;   // Use number to identify
+        // Create i
+        const iTag = document.createElement('i');
+        iTag.className = 'mdui-checkbox-icon';
+
+        // Text for label
+        const textNode = document.createTextNode(` Number ${i}`);
+
+        // Assemble the elements
+        label.appendChild(input);
+        label.appendChild(iTag);
+        label.appendChild(textNode);
+
+        // Add to the container
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+      }
+    }
+
+    /**
+     * When the user clicks "Confirm", read the checked numbers and update excludedNumbers
+     */
+    function setExcludeList() {
+      const container = document.getElementById('excludeCheckboxes');
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+      const newExcludes = [];
+    
+      checkboxes.forEach(chk => {
+        if (chk.checked) {
+          newExcludes.push(parseInt(chk.value, 10));
+        }
+      });
+    
+      excludedNumbers = newExcludes;
+      
+      // Update the Chip display
+      if (excludedNumbers.length > 0) {
+        // Exclusion format: Excluded 1,3,6, total 3 items
+        document.getElementById('chipExcluded').textContent = `Excluded ${excludedNumbers.join(', ')} total ${excludedNumbers.length} items`;
+      } else {
+        document.getElementById('chipExcluded').textContent = 'Click to Set Exclusions';
+      }
+    
+      // Update menu item availability and check if selection can be made
+      toggleMenuItems(getLeftoverCount());
+      checkIfStartButtonEnabled();
+    }
+
+    /**
+     * Based on remaining people, disable or enable menu items where the selection number is greater than remaining people
+     * @param {*} effectiveCount Remaining people (totalPeopleCount - excludedNumbers)
+     */
+    function toggleMenuItems(effectiveCount) {
+      const menuItem1 = document.getElementById('menuItem1');
+      const menuItem5 = document.getElementById('menuItem5');
+      const menuItem10 = document.getElementById('menuItem10');
+
+      // Remove disabled class from all
+      [menuItem1, menuItem5, menuItem10].forEach(item => item.classList.remove('mdui-disabled'));
+
+      // If effectiveCount < 1, disable all
+      if (effectiveCount < 1) {
+        [menuItem1, menuItem5, menuItem10].forEach(item => item.classList.add('mdui-disabled'));
+        return;
+      }
+
+      // If < 5, disable 5 and 10
+      if (effectiveCount < 5) {
+        menuItem5.classList.add('mdui-disabled');
+        menuItem10.classList.add('mdui-disabled');
+      } 
+      // If < 10, disable 10
+      else if (effectiveCount < 10) {
+        menuItem10.classList.add('mdui-disabled');
+      }
+    }
+
+    /**
+     * Update the "number of people to select" setting
+     */
+    function updateChip(number) {
+      const menuItem = document.getElementById(`menuItem${number}`);
+      if (menuItem.classList.contains('mdui-disabled')) {
+        // If disabled, show a warning
+        mdui.snackbar({
+          message: `Not enough people remaining to select ${number} person(s)`,
+          position: 'left-bottom'
+        });
+        return;
+      }
+
+      selectedNumber = number;
+      document.getElementById('chipContent').textContent = `Choose Number to Select: ${number} People`;
+      document.getElementById('number').textContent = `${number} People`;
+
+      // Check if selection can be made
+      checkIfStartButtonEnabled();
+    }
+
+    /**
+     * Check if the "Start" button is enabled: Remaining people >= selectedNumber
+     */
+    function checkIfStartButtonEnabled() {
+      // If totalPeopleCount is not set or is 0, disable it
+      if (totalPeopleCount <= 0) {
+        document.getElementById('startButton').disabled = true;
+        return;
+      }
+
+      const leftover = getLeftoverCount();
+      // If remaining people >= selected number, enable it; otherwise, disable
+      if (leftover >= selectedNumber) {
+        document.getElementById('startButton').disabled = false;
+      } else {
+        document.getElementById('startButton').disabled = true;
+      }
+    }
+
+    /**
+     * Start the selection process
+     */
+    function getRandomPeople() {
+      // Hide start button, show spinner
+      document.getElementById('startButton').style.display = 'none';
+      document.getElementById('spinnerContainer').style.display = 'block';
+
+      // Hide normal progress, show loading progress
+      document.getElementById('normalProgress').style.display = 'none';
+      document.getElementById('loadingProgress').style.display = 'block';
+
+      // Dynamically update numbers: Update every 100ms
+      const intervalId = setInterval(() => {
+        const luckyOneElement = document.getElementById('luckyone');
+        let randomNumbers = [];
+        for (let i = 0; i < selectedNumber; i++) {
+          randomNumbers.push(Math.floor(Math.random() * totalPeopleCount) + 1);
+        }
+        luckyOneElement.textContent = randomNumbers.join(', ');
+      }, 100);
+
+      // Stop flashing after 3 seconds and show final result
+      setTimeout(() => {
+        clearInterval(intervalId);
+
+        // The available pool: excluding the excluded numbers
+        let peopleArray = Array.from({ length: totalPeopleCount }, (_, i) => i + 1)
+          .filter(num => !excludedNumbers.includes(num));
+
+        let leftover = peopleArray.length; // Actual remaining available people
+        let luckyOnes = [];
+
+        for (let i = 0; i < selectedNumber; i++) {
+          if (peopleArray.length === 0) break; // Stop if no one is available
+          const randomIndex = Math.floor(Math.random() * peopleArray.length);
+          luckyOnes.push(peopleArray.splice(randomIndex, 1)[0]);
+        }
+
+        // Display the final result
+        document.getElementById('luckyone').textContent = luckyOnes.join(', ');
+
+        // Restore UI
+        document.getElementById('spinnerContainer').style.display = 'none';
+        document.getElementById('loadingProgress').style.display = 'none';
+        document.getElementById('normalProgress').style.display = 'block';
+
+        const startButton = document.getElementById('startButton');
+        startButton.style.display = 'block';
+        // Change to "Try Again" state
+        startButton.innerHTML = '<span style="position: relative; top: 2px;">Try Again</span> <i class="mdui-icon material-icons">refresh</i>';
+        document.getElementById('saveButton').style.display = 'block'; // Show save button
+      }, 3000);
+    }
+
+    /**
+     * Download the result in HTML format
+     */
+    function saveResult() {
+      const luckyNumbers = document.getElementById('luckyone').textContent;
+      const currentDate = new Date();
+      const dateString = currentDate.toLocaleDateString('en-US'); // Date
+      const timeString = currentDate.toLocaleTimeString('en-US', { hour12: false }); // Time
+
+      const htmlContent = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" />
+          <title>The Lucky Ones</title>
+        </head>
+        <body>
+          <h1>Lucky Numbers: <strong> ${luckyNumbers}</strong></h1>
+          <p>Selection Date: ${dateString}</p>
+          <p>Selection Time: ${timeString}</p>
+          <h1>You're so lucky! You got selected 😁😁😁</h1>
+        </body>
+        </html>`;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Selection_Result.html';
+      a.click();
+    }
+  </script>
+</body>
+</html>
