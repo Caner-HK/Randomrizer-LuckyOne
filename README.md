@@ -27,7 +27,6 @@
 4. **Start the Draw**: Click "Start" to initiate the random selection process. The app will show a fun animation as it randomly selects the winners. 🌀
 5. **Download Results**: After the draw, you can download the results in an HTML file for easy sharing and record-keeping. 📂
 
----
 
 ## Deploy & Use 🛠️
 
@@ -38,7 +37,6 @@ Simply download the compressed package in [Releases](https://github.com/Caner-HK
 > [!WARNING] 
 > If you did not decompress the whole pack, then you are not able to see the page correctly. Accordingly, please do NOT report a issue if you even do not follow the such simple instruction.
 
----
 
 ## Technologies Used 🖥️
 
