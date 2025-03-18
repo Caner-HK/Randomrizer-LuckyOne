@@ -1,14 +1,14 @@
 # 🎲 Randomizer-LuckyOne 🎉
 
-| English | [简体中文](./README-ZH.md) | [繁體中文](./README-ZH-HK.md) |
+| English | [简体中文](./assets/README-ZH.md) | [繁體中文](./assets/README-ZH-HK.md) |
 
 **Randomizer-LuckyOne** is a simple and powerful web application designed to randomly select participants for activities, events, or any scenario that requires a random draw. Whether you're hosting a class, event, or team activity, this tool helps you randomly choose the lucky ones from a predefined list, with the added option of excluding certain participants. 🚀
 
 > [!NOTE]
 > Try online demo at [Here](https://lucky.caner.hk/en)
 
-<img src="./img-desktop.jpg" alt="Desktop Screenshot" width="600">
-<img src="./img-phone.jpg" alt="Phone Screenshot" width="600">
+<img src="./assets/img-desktop.jpg" alt="Desktop Screenshot" width="600">
+<img src="./assets/img-phone.jpg" alt="Phone Screenshot" width="600">
 
 ## Features ✨
 
@@ -27,15 +27,18 @@
 4. **Start the Draw**: Click "Start" to initiate the random selection process. The app will show a fun animation as it randomly selects the winners. 🌀
 5. **Download Results**: After the draw, you can download the results in an HTML file for easy sharing and record-keeping. 📂
 
-## Installation 🛠️
+---
 
-To get started with **Randomizer-LuckyOne**, you can clone the repository and open it directly in your browser:
+## Deploy & Use 🛠️
 
-```bash
-git clone https://github.com/Caner-HK/Randomrizer-LuckyOne.git
-```
+Simply download the compressed package in [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases), __decompress__ and deploy it on a web server. Wanna simpler? Just download, __decompress__ and double click the html file.
 
-Then, simply double-click the `index-en.html index-zh.html index-zh-hk.html` file in your local directory, and you're good to go! 🎉
+🎉Congrats! You're now ready to go.
+
+> [!WARNING] 
+> If you did not decompress the whole pack, then you are not able to see the page correctly. Accordingly, please do NOT report a issue if you even do not follow the such simple instruction.
+
+---
 
 ## Technologies Used 🖥️
 

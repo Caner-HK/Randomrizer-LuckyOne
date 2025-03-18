@@ -1,12 +1,12 @@
 # 🎲 Randomizer-LuckyOne 🎉
 
- | [English](./README.md) | [簡體中文](./README-ZH.md) | 繁體中文 |
+ | [English](../README.md) | [簡體中文](./README-ZH.md) | 繁體中文 |
 
 
  **Randomizer-LuckyOne** 是一個簡單但強大的隨機抽獎應用，適用於活動、課堂、會議等場景。 你可以從指定範圍內隨機選擇幸運兒，同時支援 **排除特定號碼**，讓抽取過程更加靈活！  🚀
 
 > [!NOTE]
-> 在 [此处](https://lucky.caner.hk/) 尝试在线示范
+> 係 [呢度](https://lucky.caner.hk/zhhk) 試吓在線示範
 
  <img src="./img-desktop.jpg" alt="Desktop Screenshot" width="600">
  <img src="./img-phone.jpg" alt="Phone Screenshot" width="600">
@@ -30,17 +30,16 @@
 
  ---
 
- ## 🔧 安裝與運行
+ ## 🔧 部署與使用
 
- 你可以直接複製倉庫到本地，然後 **雙擊 `index.html` 即可開啟使用**！
+只需前往 [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases) 頁面，先下載壓縮包，__解壓__，然後部署到一個網頁伺服器。想更簡單？那只需要下載、__解壓__，然後雙擊 HTML 文件。
 
- 『`bash
- git clone https://github.com/Caner-HK/Randomrizer-LuckyOne.git
- ```
+🎉 恭喜！你現在可以使用了。
 
- 然後在本地找到 `index.html` 文件，雙擊打開，即可在瀏覽器中運行！  🚀
+> [!WARNING] 
+> 如果你沒有__完整解壓__整個壓縮包，那麼你肯定無法正確查看頁面。因此，如果你甚至沒有遵循如此簡單的說明，請不要提交 issue。
 
- ---
+---
 
  ## 🖥️ 技術堆疊
 
