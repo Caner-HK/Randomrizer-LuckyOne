@@ -32,12 +32,12 @@
 
  ## 🔧 部署與使用
 
-只需前往 [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases) 頁面，先下載壓縮包，__解壓__，然後部署到一個網頁伺服器。想更簡單？那只需要下載、__解壓__，然後雙擊 HTML 文件。
+只需前往 [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases) 頁面，先下載壓縮包，**解壓**，然後部署到一個網頁伺服器。想更簡單？那只需要下載、**解壓**，然後雙擊 HTML 文件。
 
 🎉 恭喜！你現在可以使用了。
 
 > [!WARNING] 
-> 如果你沒有__完整解壓__整個壓縮包，那麼你肯定無法正確查看頁面。因此，如果你甚至沒有遵循如此簡單的說明，請不要提交 issue。
+> 如果你沒有**完整解壓**整個壓縮包，那麼你肯定無法正確查看頁面。因此，如果你甚至沒有遵循如此簡單的說明，請不要提交 issue。
 
 ---
 

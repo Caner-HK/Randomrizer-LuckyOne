@@ -31,7 +31,7 @@
 
 ## Deploy & Use 🛠️
 
-Simply download the compressed package in [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases), __decompress__ and deploy it on a web server. Wanna simpler? Just download, __decompress__ and double click the html file.
+Simply download the compressed package in [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases), **decompress** and deploy it on a web server. Wanna simpler? Just download, **decompress** and double click the html file.
 
 🎉Congrats! You're now ready to go.
 
