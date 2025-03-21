@@ -30,12 +30,13 @@
 
 ## Deploy & Use 🛠️
 
-Simply download the compressed package in [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases), **decompress** and deploy it on a web server. Wanna simpler? Just download, **decompress** and double click the html file.
+- Download the complete Zip archive from the [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases) page, **deploy to a server** or **open locally**.
+- Use it directly through the [online demo](https://lucky.caner.hk/).
 
-🎉Congrats! You're now ready to go.
+🎉Congratulations! You can use it now.
 
-> [!WARNING] 
-> If you did not decompress the whole pack, then you are not able to see the page correctly. Accordingly, please do NOT report a issue if you even do not follow the such simple instruction.
+> [!TIP] 
+> If the style file cannot be loaded after deploying on your server, you can first upload the [resource file](https://github.com/Caner-HK/Randomrizer-LuckyOne/tree/main/static) to the server, and then change the links in the ```<link>``` and ```<script>``` tags in the HTML source code to the URL address of the resource file on your server.
 
 
 ## Technologies Used 🖥️
