@@ -31,13 +31,13 @@
 ---
 
 ## 🔧 部署和使用
+- 在 [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases) 页面下载完整的 Zip 压缩文件，**部署至服务器**或**在本地打开**。
+- 直接通过 [在线演示](https://lucky.caner.hk/) 使用。
 
-只要去 [Releases](https://github.com/Caner-HK/Randomrizer-LuckyOne/releases) 页面先下载压缩包, **解压** 然后部署到一个网页服务器。 想更简单？ 那只需要下载、**解压**然后双击html文件。
+🎉恭喜！你现在可以使用了。
 
-🎉恭喜！你现在可以用了。
-
-> [!WARNING] 
-> 如果你都没有**完整解压**整个压缩包，那你肯定没法正确看到页面。因此，如果你甚至都没有遵循这样的简单说明，请不要提issue。
+> [!TIP] 
+> 如果部署在您的服务器后无法加载样式文件，可以首先将 [资源文件](https://github.com/Caner-HK/Randomrizer-LuckyOne/tree/main/static) 上传至服务器，然后将 HTML 源码中的 ```<link>``` 和 ```<script>``` 标签中的链接改为您服务器上资源文件的 URL 地址。
 
 ---
 
